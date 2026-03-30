@@ -11,6 +11,24 @@ services:
             - prometheus_data:/prometheus
         ports:
             - "9090:9090"
+        networks:
+            - mon-network
+    node-exporter:
+        image: prom/node-exporter:latest
+        container_name: node-exporter
+        pid: host
+        volumes:
+            - '/:/host:ro'
+        command:
+            - '--path.rootfs=/host'
+        ports:
+            - 9100:9100
+        restart: unless-stopped
+        networks:
+            - mon-network
 
+networks:
+  mon-network:
+    driver: bridge
 volumes:
     prometheus_data:
