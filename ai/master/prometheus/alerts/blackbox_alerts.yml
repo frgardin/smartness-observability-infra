@@ -1,0 +1,34 @@
+groups:
+  - name: blackbox_alerts
+    rules:
+      - alert: HttpEndpointDown
+        expr: probe_success{job="blackbox-http"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "HTTP endpoint {{ $labels.instance }} is down"
+
+      - alert: HttpEndpointSlowResponse
+        expr: probe_http_duration_seconds{job="blackbox-http"} > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "HTTP endpoint {{ $labels.instance }} is slow"
+
+      - alert: TcpEndpointDown
+        expr: probe_success{job="blackbox-tcp"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "TCP endpoint {{ $labels.instance }} is down"
+
+      - alert: IcmpPingFailed
+        expr: probe_success{job="blackbox-icmp"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ICMP ping to {{ $labels.instance }} failed"
