@@ -5,6 +5,7 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./file_sd:/etc/prometheus/file_sd:ro
 
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest

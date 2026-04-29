@@ -14,8 +14,8 @@
         "query": "label_values(up{job=\"node\"}, instance)",
         "refresh": 2,
         "sort": 1,
-        "includeAll": false,
-        "multi": false
+        "includeAll": true,
+        "multi": true
       }
     ]
   },

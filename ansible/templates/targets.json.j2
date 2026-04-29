@@ -1,0 +1,10 @@
+[
+{% for host in groups['slaves'] %}
+  {
+    "targets": ["{{ hostvars[host]['ansible_host'] }}:{{ node_exporter_port }}"],
+    "labels": {
+      "hostname": "{{ host }}"
+    }
+  }{{ "," if not loop.last else "" }}
+{% endfor %}
+]

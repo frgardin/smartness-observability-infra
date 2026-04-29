@@ -1,0 +1,46 @@
+---
+- name: Criar usuário de sistema node_exporter
+  user:
+    name: "{{ node_exporter_user }}"
+    system: true
+    shell: /sbin/nologin
+    create_home: false
+
+- name: Baixar node-exporter
+  unarchive:
+    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp
+    remote_src: true
+    creates: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+
+- name: Instalar binário
+  copy:
+    src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+    dest: /usr/local/bin/node_exporter
+    owner: "{{ node_exporter_user }}"
+    mode: "0755"
+    remote_src: true
+  notify: restart node_exporter
+
+- name: Instalar systemd unit
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    mode: "0644"
+  notify: restart node_exporter
+
+- name: Habilitar e iniciar serviço
+  systemd:
+    name: node_exporter
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Abrir porta no ufw (se ativo)
+  ufw:
+    rule: allow
+    port: "{{ node_exporter_port }}"
+    proto: tcp
+  when: ansible_facts.services['ufw'] is defined or ansible_facts.packages['ufw'] is defined
+  ignore_errors: true

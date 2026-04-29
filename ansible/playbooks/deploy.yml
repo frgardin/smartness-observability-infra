@@ -1,0 +1,14 @@
+---
+- name: Deploy node-exporter nas slaves
+  hosts: slaves
+  become: true
+  roles:
+    - node_exporter
+
+  post_tasks:
+    - name: Atualizar file_sd/targets.json no master
+      delegate_to: localhost
+      run_once: true
+      template:
+        src: "{{ playbook_dir }}/../templates/targets.json.j2"
+        dest: "{{ playbook_dir }}/../../file_sd/targets.json"
