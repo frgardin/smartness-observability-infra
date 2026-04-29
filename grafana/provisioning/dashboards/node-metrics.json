@@ -41,7 +41,7 @@
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none" },
       "targets": [{
         "datasource": { "type": "prometheus", "uid": "prometheus" },
-        "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance=\"$instance\"}[1m])) * 100)",
+        "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance=\"$instance\"}[30s])) * 100)",
         "refId": "A", "legendFormat": "cpu"
       }]
     },
@@ -151,22 +151,22 @@
       "targets": [
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance=\"$instance\"}[1m])) * 100)",
+          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance=\"$instance\"}[30s])) * 100)",
           "refId": "A", "legendFormat": "total"
         },
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "avg by (instance) (rate(node_cpu_seconds_total{mode=\"user\", instance=\"$instance\"}[1m])) * 100",
+          "expr": "avg by (instance) (rate(node_cpu_seconds_total{mode=\"user\", instance=\"$instance\"}[30s])) * 100",
           "refId": "B", "legendFormat": "user"
         },
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "avg by (instance) (rate(node_cpu_seconds_total{mode=\"system\", instance=\"$instance\"}[1m])) * 100",
+          "expr": "avg by (instance) (rate(node_cpu_seconds_total{mode=\"system\", instance=\"$instance\"}[30s])) * 100",
           "refId": "C", "legendFormat": "system"
         },
         {
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "avg by (instance) (rate(node_cpu_seconds_total{mode=\"iowait\", instance=\"$instance\"}[1m])) * 100",
+          "expr": "avg by (instance) (rate(node_cpu_seconds_total{mode=\"iowait\", instance=\"$instance\"}[30s])) * 100",
           "refId": "D", "legendFormat": "iowait"
         }
       ]
