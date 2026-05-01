@@ -1,0 +1,14 @@
+[
+  {
+    "targets": ["node_exporter:9100"],
+    "labels": {
+      "hostname": "master"
+    }
+  },
+  {
+    "targets": ["10.11.12.4:9100"],
+    "labels": {
+      "hostname": "server-4"
+    }
+  }
+]
