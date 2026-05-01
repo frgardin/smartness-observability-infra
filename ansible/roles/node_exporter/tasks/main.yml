@@ -1,10 +1,10 @@
 ---
-- name: Criar usuário de sistema node_exporter
-  user:
-    name: "{{ node_exporter_user }}"
-    system: true
-    shell: /sbin/nologin
-    create_home: false
+# - name: Criar usuário de sistema node_exporter
+#   user:
+#     name: "{{ node_exporter_user }}"
+#     system: true
+#     shell: /sbin/nologin
+#     create_home: false
 
 - name: Baixar node-exporter
   unarchive:
@@ -26,7 +26,7 @@
   template:
     src: node_exporter.service.j2
     dest: /etc/systemd/system/node_exporter.service
-    owner: root
+    owner: "{{ node_exporter_user }}"
     mode: "0644"
   notify: restart node_exporter
 
