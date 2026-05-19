@@ -1,0 +1,20 @@
+[
+  {
+    "targets": ["10.11.12.2:9100"],
+    "labels": {
+      "hostname": "server-2"
+    }
+  },
+  {
+    "targets": ["10.11.12.3:9100"],
+    "labels": {
+      "hostname": "server-3"
+    }
+  },
+  {
+    "targets": ["10.11.12.4:9100"],
+    "labels": {
+      "hostname": "server-4"
+    }
+  }
+]

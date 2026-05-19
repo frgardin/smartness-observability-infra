@@ -12,5 +12,10 @@ scrape_configs:
       - targets: ['localhost:9090']
 
   - job_name: node
-    static_configs:
-      - targets: ['node_exporter:9100']
+    file_sd_configs:
+      - files:
+          - '/etc/prometheus/file_sd/targets.json'
+        refresh_interval: 30s
+    relabel_configs:
+      - source_labels: [hostname]
+        target_label: instance
